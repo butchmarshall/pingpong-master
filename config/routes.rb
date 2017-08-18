@@ -7,4 +7,12 @@ Rails.application.routes.draw do
 	root to: "home#index"
 	get '/history', to: 'home#history'
 	get '/log',     to: 'home#log'
+
+	scope module: :api do
+		constraints(ApiVersionConstraint.new(version: 1.0)) do
+			scope module: :v1 do
+				resources :games
+			end
+		end
+	end
 end
