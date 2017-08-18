@@ -12,6 +12,8 @@ gem 'devise', '~> 3.5.2'
 gem 'devise-bootstrap-views', '~> 0.0.6'
 gem 'bootstrap-sass'
 
+gem 'webpacker', '~> 2.0'
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
