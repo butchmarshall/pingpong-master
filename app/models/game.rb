@@ -8,6 +8,32 @@ class Game < ActiveRecord::Base
 	validate :validate_players
 	validate :validate_player_scores
 
+	after_create :after_create_update_users_elo_rank
+
+		# Updates elo ranking between the two players
+		def after_create_update_users_elo_rank
+			winner = ((self.players[0].score > self.players[1].score)? self.players[0] : self.players[1]).user;
+			looser = ((self.players[0].score > self.players[1].score)? self.players[1] : self.players[0]).user;
+
+			# Dont let anyone else touch the scores until they're updated
+			winner.lock!
+			looser.lock!
+
+			winner_rank = winner.rank
+			looser_rank = looser.rank
+
+			elo = EloRank.new(32)
+
+			expected_winner_rank = elo.expected(winner_rank, looser_rank)
+			expected_looser_rank = elo.expected(looser_rank, winner_rank)
+
+			winner_rank_new = elo.update_rank(expected_winner_rank, 1, winner_rank)
+			looser_rank_new = elo.update_rank(expected_looser_rank, 0, looser_rank)
+
+			winner.update_attribute(:rank, winner_rank_new)
+			looser.update_attribute(:rank, looser_rank_new)
+		end
+
 	private
 		def validate_player_scores
 			errors.add(:players, "at least one must reach 21") if players.detect { |player| player.score >= 21 }.nil?
