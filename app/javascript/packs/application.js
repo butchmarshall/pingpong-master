@@ -6,5 +6,10 @@
 //
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
+import ReactDOM from 'react-dom';
+import React from 'react';
+import PingPong from './pingpong';
 
-console.log('Hello World from Webpacker')
+window.PingPong = PingPong;
+window.ReactDOM = ReactDOM;
+window.React = React;
