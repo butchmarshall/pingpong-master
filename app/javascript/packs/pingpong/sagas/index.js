@@ -9,9 +9,14 @@ import {
 	watchRequestLeaderboard,
 } from './leaderboard';
 
+import {
+	watchRequestGameHistory,
+} from './game_history';
+
 export default function* root() {
 	yield all([
 		watchCreateGame(),
 		watchRequestLeaderboard(),
+		watchRequestGameHistory(),
 	]);
 }

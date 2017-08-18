@@ -11,7 +11,7 @@ module Api
 					games = Game.includes(:players => [:user])
 				end
 
-				render json: games, include: 'players,players.user', each_serializer: GameSerializer
+				render json: games.order(played_at: :desc), include: 'players,players.user', each_serializer: GameSerializer
 			end
 
 			# Create a new game
@@ -27,7 +27,9 @@ module Api
 
 			private
 				def game_params
-					ActiveModelSerializers::Deserialization.jsonapi_parse!(json_params, embedded: [:players])
+					ActiveModelSerializers::Deserialization.jsonapi_parse!(json_params, embedded: [:players]).tap { |i|
+						i[:played_at] = Time.at(i[:played_at]) unless i[:played_at].nil?
+					}
 				end
 		end
 	end

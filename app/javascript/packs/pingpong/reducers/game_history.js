@@ -8,9 +8,9 @@ let initialState = Immutable.Map({
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		case actions.REQUESTED_LEADERBOARD:
-			state = state.set("data", Immutable.List(action.payload.body.data))
-			state = state.set("included", Immutable.List(action.payload.body.included))
+		case actions.REQUESTED_GAME_HISTORY:
+			state = state.set("data", Immutable.List(action.payload.body.data));
+			state = state.set("included", Immutable.List(action.payload.body.included));
 			break;
 	}
 

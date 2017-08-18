@@ -13,7 +13,7 @@ export function* requestLeaderboard(action) {
 			return yield put(actions.requestLeaderboardFailed(response, json));
 		}
 
-		yield put(actions.requestedLeaderboard(response,json.data));
+		yield put(actions.requestedLeaderboard(response,json));
 	} catch(e) {
 		return yield put(actions.requestLeaderboardFailed({}, {}));
 	}

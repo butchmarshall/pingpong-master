@@ -64,6 +64,7 @@ AppWithNavigationState.router = AppRouter;
 
 const mapStateToProps = (state) => ({
 	leaderboard: state.leaderboard,
+	game_history: state.game_history,
 	current_user: state.current_user,
 	users: state.users,
 	nav: state.app_navigator,

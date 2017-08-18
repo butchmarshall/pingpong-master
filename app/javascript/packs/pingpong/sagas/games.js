@@ -5,6 +5,7 @@ import * as actions from '../actions/index';
 
 // Create a game
 export function* createGame(action) {
+	
 	try {
 		const payload = {
 			"data": {
@@ -42,11 +43,16 @@ export function* createGame(action) {
 		const json = yield response.json();
 
 		if (!response.ok) {
+			alert("Validation failed.\n"+json.errors.map((error) => {
+				return (error.source.pointer.split("/").pop())+" "+error.detail;
+			}).join("\n"));
 			return yield put(actions.createGameFailed(response, json));
 		}
 
-		yield put(actions.createdGame(response,json.data));
+		alert("Created successfully");
+		yield put(actions.createdGame(response,json));
 	} catch(e) {
+		alert("Validation failed");
 		return yield put(actions.createGameFailed({}, {}));
 	}
 }
