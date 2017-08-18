@@ -12,6 +12,9 @@ Rails.application.routes.draw do
 		constraints(ApiVersionConstraint.new(version: 1.0)) do
 			scope module: :v1 do
 				resources :games
+				resources :users do
+					resources :games
+				end
 			end
 		end
 	end

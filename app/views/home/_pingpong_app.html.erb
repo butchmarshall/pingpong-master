@@ -4,6 +4,9 @@
 document.addEventListener('DOMContentLoaded', function() {
 	ReactDOM.render(
 		React.createElement(PingPong, {
+			current_user: <%= current_user.to_json.html_safe %>,
+			users: <%= User.all.to_json.html_safe %>,
+			authentication: <%= current_user.create_new_auth_token().to_json.html_safe %>
 		}),
 		document.getElementById("pingpong_app")
 	);

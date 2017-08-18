@@ -4,12 +4,23 @@ import { connect } from 'react-redux';
 import { addNavigationHelpers, createNavigator, StackRouter } from 'react-navigation';
 
 import LogScreen from "../containers/log_screen";
+import LeaderboardScreen from "../containers/leaderboard_screen";
+import HistoryScreen from "../containers/history_screen";
+
 import * as actions from '../actions/index';
 
 export const AppRouter = StackRouter({
+	"Leaderboard": {
+		screen: LeaderboardScreen,
+		path: '',
+	},
 	"Log": {
 		screen: LogScreen,
 		path: 'log',
+	},
+	"History": {
+		screen: HistoryScreen,
+		path: 'history',
 	},
 });
 
@@ -53,6 +64,8 @@ AppWithNavigationState.router = AppRouter;
 
 const mapStateToProps = (state) => ({
 	leaderboard: state.leaderboard,
+	current_user: state.current_user,
+	users: state.users,
 	nav: state.app_navigator,
 });
 
