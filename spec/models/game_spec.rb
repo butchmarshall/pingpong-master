@@ -18,28 +18,28 @@ RSpec.describe Game, :type => :model do
 		describe "errors" do
 			describe "game not complete" do
 				it 'if one player does not reach at least 21' do
-					expect(Game.create({:played_at=>@timestamp, :players_attributes=>[{:user_id=>@user_1.id, :score=>5}, {:user_id=>@user_2.id, :score=>8}]}).errors[:players].size).to eq(1)
+					expect(Game.create({:played_at=>@timestamp, :players_attributes=>[{:user_id=>@user_1.id, :score=>5}, {:user_id=>@user_2.id, :score=>8}]}).errors[:players].size).to eq(2)
 				end
 				it 'for games with less than a two point margin' do
-					expect(Game.create({:played_at=>@timestamp, :players_attributes=>[{:user_id=>@user_1.id, :score=>20}, {:user_id=>@user_2.id, :score=>21}]}).errors[:players].size).to eq(1)
+					expect(Game.create({:played_at=>@timestamp, :players_attributes=>[{:user_id=>@user_1.id, :score=>20}, {:user_id=>@user_2.id, :score=>21}]}).errors[:players].size).to eq(2)
 				end
 			end
 
 			describe "invalid score" do
 				it 'for scores outside of the ranges that are valid' do
 					# Cannot score negative numbers
-					expect(Game.create({:played_at=>@timestamp, :players_attributes=>[{:user_id=>@user_1.id, :score=>-1}, {:user_id=>@user_2.id, :score=>21}]}).errors[:players].size).to eq(1)
+					expect(Game.create({:played_at=>@timestamp, :players_attributes=>[{:user_id=>@user_1.id, :score=>-1}, {:user_id=>@user_2.id, :score=>21}]}).errors[:players].size).to eq(2)
 
 					# Scores greater than 21, victory range of two
-					expect(Game.create({:played_at=>@timestamp, :players_attributes=>[{:user_id=>@user_1.id, :score=>5}, {:user_id=>@user_2.id, :score=>22}]}).errors[:players].size).to eq(1)
+					expect(Game.create({:played_at=>@timestamp, :players_attributes=>[{:user_id=>@user_1.id, :score=>5}, {:user_id=>@user_2.id, :score=>22}]}).errors[:players].size).to eq(2)
 				end
 			end
 
 			describe "invalid user" do
 				it 'if one of the users cannot be found' do
-					expect(Game.create({:played_at=>@timestamp, :players_attributes=>[{:user_id=>-5, :score=>5}, {:user_id=>@user_2.id, :score=>21}]}).errors[:players].size).to eq(1)
-					expect(Game.create({:played_at=>@timestamp, :players_attributes=>[{:user_id=>-5, :score=>5}, {:user_id=>0, :score=>21}]}).errors[:players].size).to eq(1)
-					expect(Game.create({:played_at=>@timestamp, :players_attributes=>[{:user_id=>@user_1.id, :score=>5}, {:user_id=>0, :score=>21}]}).errors[:players].size).to eq(1)
+					expect(Game.create({:played_at=>@timestamp, :players_attributes=>[{:user_id=>-5, :score=>5}, {:user_id=>@user_2.id, :score=>21}]}).errors[:players].size).to eq(2)
+					expect(Game.create({:played_at=>@timestamp, :players_attributes=>[{:user_id=>-5, :score=>5}, {:user_id=>0, :score=>21}]}).errors[:players].size).to eq(2)
+					expect(Game.create({:played_at=>@timestamp, :players_attributes=>[{:user_id=>@user_1.id, :score=>5}, {:user_id=>0, :score=>21}]}).errors[:players].size).to eq(2)
 				end
 			end
 		end

@@ -2,7 +2,7 @@
 
 1. Run `bundle install`
 2. Run `rake db:migrate`
-3. Run `bundle exec rake webpacker:compile`
+3. Run `bundle exec rake webpacker:compile` ** Dont forget this or nothing will load **
 4. Run `rake db:seed`
 5. Run `rails s`
 6. Create a new account
